@@ -36,16 +36,14 @@ class SolarSystem {
 
         const dx = p2.pos.x - p1.pos.x; // m
         const dy = p2.pos.y - p1.pos.y; // m
-        const r2 = dx * dx + dy * dy;   // m²
-        const r = sqrt(r2);
+        const distance = sqrt(pow(dx, 2) + pow(dy, 2)); 
 
-        const a = this.G * p2.mass / r2; // m s⁻² (magnitude)
-        ax += a * dx / r;                // project onto x
-        ay += a * dy / r;                // project onto y
+        ax += p2.mass * dx / pow(distance, 3); // m s⁻²
+        ay += p2.mass * dy / pow(distance, 3); // m s⁻²
       }
 
-      p1.vel.x += ax * this.dt;   // m s⁻¹
-      p1.vel.y += ay * this.dt;
+      p1.vel.x += ax * this.dt * this.G;   // m s⁻¹
+      p1.vel.y += ay * this.dt * this.G;
 
       p1.pos.x += p1.vel.x * this.dt; // m
       p1.pos.y += p1.vel.y * this.dt;
